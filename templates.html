@@ -14,14 +14,29 @@
         h1 {
             text-align: center;
             color: #012340;
-            margin-bottom: 80px;
+            margin-bottom: 30px;
+        }
+
+        .controls {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        select {
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: white;
+            color: #012340;
+            cursor: pointer;
         }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
             gap: 30px;
-            max-width: 1200px;
+            max-width: 1600px;
             margin: 0 auto;
         }
 
@@ -29,11 +44,13 @@
             background: white;
             border: 1px solid #6d6d6d;
             border-radius: 8px;
-            padding: 5px;
+            padding: 10px;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         .thumbnail:hover {
@@ -54,18 +71,14 @@
 
         .thumbnail iframe {
             width: 100%;
-            height: 200px;
+            height: 280px;
             border: none;
             pointer-events: none;
-            transform: scale(1);
-            transform-origin: top left;
-            width: 200%;
-            height: 200px;
         }
 
         .instructions {
             max-width: 800px;
-            margin: 160px auto 40px;
+            margin: 100px auto 40px;
             padding: 30px;
             text-align: left;
             background-color: white;
@@ -97,34 +110,59 @@
 
 <body>
     <h1>Email Signature Templates for Fountain Health NYC</h1>
-    <div class="grid">
-        <div class="thumbnail" onclick="window.open('signature1.html', '_blank')">
-            <div class="thumbnail-title">Signature 1</div>
-            <iframe src="signature1.html" scrolling="no"></iframe>
-        </div>
-        <div class="thumbnail" onclick="window.open('signature2.html', '_blank')">
-            <div class="thumbnail-title">Signature 2</div>
-            <iframe src="signature2.html" scrolling="no"></iframe>
-        </div>
-        <div class="thumbnail" onclick="window.open('signature3.html', '_blank')">
-            <div class="thumbnail-title">Signature 3</div>
-            <iframe src="signature3.html" scrolling="no"></iframe>
-        </div>
-        <!-- Add more signatures here -->
+
+    <div class="controls">
+        <label for="person-select"><strong>Select Person: </strong></label>
+        <select id="person-select" onchange="updateSignatures()">
+            <option value="">Nikita Tsimmer</option>
+            <option value="-leo">Leo Tsimmer</option>
+            <option value="-zarfati">Doreen Zarfati</option>
+        </select>
     </div>
+
+    <div class="grid">
+        <div class="thumbnail" onclick="openSignature(1)">
+            <div class="thumbnail-title">Signature 1</div>
+            <iframe id="sig1" src="signature1.html" scrolling="no"></iframe>
+        </div>
+        <div class="thumbnail" onclick="openSignature(2)">
+            <div class="thumbnail-title">Signature 2</div>
+            <iframe id="sig2" src="signature2.html" scrolling="no"></iframe>
+        </div>
+        <div class="thumbnail" onclick="openSignature(3)">
+            <div class="thumbnail-title">Signature 3</div>
+            <iframe id="sig3" src="signature3.html" scrolling="no"></iframe>
+        </div>
+    </div>
+
     <div class="instructions">
         <h2>How to Use These Email Signatures</h2>
         <ol>
-            <li>Click on the signature template you prefer above to open it in a new window</li>
-            <li>Select all content on the signature page (press <strong>Ctrl+A</strong> or <strong>Cmd+A</strong>)</li>
-            <li>Copy the selected content (press <strong>Ctrl+C</strong> or <strong>Cmd+C</strong>)</li>
-            <li>Go to your email client's signature settings</li>
+            <li>Select your name from the dropdown menu above.</li>
+            <li>Click on the signature template you prefer to open it in a new window.</li>
+            <li>Select all content on the signature page (press <strong>Ctrl+A</strong> or <strong>Cmd+A</strong>).</li>
+            <li>Copy the selected content (press <strong>Ctrl+C</strong> or <strong>Cmd+C</strong>).</li>
+            <li>Go to your email client's signature settings.</li>
             <li>Paste the copied content into your email signature field (press <strong>Ctrl+V</strong> or
-                <strong>Cmd+V</strong>)
+                <strong>Cmd+V</strong>).
             </li>
-            <li>Save your signature settings</li>
+            <li>Save your signature settings.</li>
         </ol>
     </div>
+
+    <script>
+        function updateSignatures() {
+            const suffix = document.getElementById('person-select').value;
+            document.getElementById('sig1').src = 'signature1' + suffix + '.html';
+            document.getElementById('sig2').src = 'signature2' + suffix + '.html';
+            document.getElementById('sig3').src = 'signature3' + suffix + '.html';
+        }
+
+        function openSignature(num) {
+            const suffix = document.getElementById('person-select').value;
+            window.open('signature' + num + suffix + '.html', '_blank');
+        }
+    </script>
 </body>
 
 </html>
